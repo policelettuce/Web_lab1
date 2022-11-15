@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Artemev and Bashmanov lab1</title>
+    <style>
+        body {
+            background:#007ba7;
+        }
+        .header{
+            text-align: center;
+            font-family: monospace;
+            background: white;
+            border-radius: 15px 15px 15px 15px;
+            box-shadow: 0 0 20px white;
+        }
+        .main-table{
+            border-radius: 15px 15px 15px 15px;
+            box-shadow: 0 0 20px white;
+            margin-top: 40px;
+            margin-left: 20px;
+            align-content: center;
+            background-color:white;
+            float:left;
+            padding:75px;
+        }
+        #result_table{
+            margin-top: 40px;
+            margin-left: auto;
+            margin-right: 300px;
+            border-collapse: collapse;
+            border: 1px solid #4238ca;
+            font-family: monospace;
+        }
+        #result_table tr > td{
+            text-align: center;
+            border: 1px solid #4238ca;
+            padding: 0.5em 0.75em;
+        }
+        #result_table caption{
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.5em;
+            line-height: 1.5em;
+            font-weight: 700;
+        }
+        tr.hit{
+            background: rgba(101,145,12,0.5)
+        }
+        tr.lose{
+            background: rgba(232,54,42,0.5)
+        }
+        p::first-line{
+            font-family: monospace;
+        }
+        #button_submit {
+            text-decoration: none;
+            display: inline-block;
+            width: 140px;
+            height: 45px;
+            line-height: 45px;
+            border-radius: 45px;
+            margin: 10px 20px;
+            font-family: monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            text-align: center;
+            letter-spacing: 3px;
+            font-weight: 600;
+            color: #524f4e;
+            background: white;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
+            transition: .3s;
+        }
+        #button_submit:hover {
+            background: #2EE59D;
+            box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
+            color: white;
+            transform: translateY(-7px);
+        }
+        #button_reset {
+            text-decoration: none;
+            display: inline-block;
+            width: 140px;
+            height: 45px;
+            line-height: 45px;
+            border-radius: 45px;
+            margin: 10px 20px;
+            font-family: monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            text-align: center;
+            letter-spacing: 3px;
+            font-weight: 600;
+            color: #524f4e;
+            background: white;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
+            transition: .3s;
+        }
+        #button_reset:hover {
+            background: #2EE59D;
+            box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
+            color: white;
+            transform: translateY(-7px);
+        }
+        #error{
+            font-family: monospace;
+            color: red;
+        }
+
+
+
+    </style>
+</head>
+<body>
+<div class="header">
+    <h2> Артемьев Никита, Башманов Иван : P33212 </h2>
+    <h3> Вариант: 16206</h3>
+</div>
+<main>
+
+    <div class="main-table">
+        <form action="check.php" method="post" id="check_form">
+            <img class="image" src="areas.png" id="graph" alt="Фото графика">
+            <div id="error"></div>
+            <br>
+            <div>
+                <p id="X_var">X=
+                    <select name="x">
+                        <option value="-5" name="x"> -5 </option>
+                        <option value="-4" name="x"> -4 </option>
+                        <option value="-3" name="x"> -3 </option>
+                        <option value="-2" name="x"> -2 </option>
+                        <option value="-1" name="x"> -1 </option>
+                        <option value="0" name="x"> 0 </option>
+                        <option value="1" name="x"> 1 </option>
+                        <option value="2" name="x"> 2 </option>
+                        <option value="3" name="x"> 3 </option>
+                    </select>
+                </p>
+            </div>
+            <div>
+                <p id="Y_var">Y=
+                    <input name="y"type="text"placeholder="Введите Y ∈ [-3; 3]">
+                </p>
+            </div>
+            <div>
+                <p id="R_var">R= <span contentEditable="true" id="rtxt"></span><input hidden="true" id="rval" name="r" value="policelettuce">
+                    <br>
+                    <input class="r-button" type="button" onclick="document.getElementById('rtxt').textContent = 1; document.getElementById('rval').value = 1" value="1">
+                    <input class="r-button" type="button" onclick="document.getElementById('rtxt').textContent = 1.5; document.getElementById('rval').value = 1.5" value="1.5">
+                    <input class="r-button" type="button" onclick="document.getElementById('rtxt').textContent = 2; document.getElementById('rval').value = 2" value="2">
+                    <input class="r-button" type="button" onclick="document.getElementById('rtxt').textContent = 2.5; document.getElementById('rval').value = 2.5" value="2.5">
+                    <input class="r-button" type="button" onclick="document.getElementById('rtxt').textContent = 3; document.getElementById('rval').value = 3" value="3">
+            </div>
+            <input id="button_submit" name="submit" type="submit" value="Проверить">
+            <input id="button_reset" name="reset" type="button" value="Очистить">
+        </form>
+    </div>
+    <aside>
+        <table id="result_table">
+            <caption> Результаты проверки</caption>
+            <tbody>
+            <tr>
+                <td>ID</td>
+                <td>X</td>
+                <td>Y</td>
+                <td>R</td>
+                <td>Результат</td>
+                <td>Local time</td>
+                <td>Execution time</td>
+            </tr>
+            </tbody>
+        </table>
+    </aside>
+</main>
+<script src="jquery-3.6.0.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
